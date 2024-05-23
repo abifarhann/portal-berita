@@ -37,7 +37,19 @@ function Navbar() {
                             </div>
                         </div>
                         <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white text-black border-2 rounded-box w-52">
-                            <li><button>Profile</button></li>
+                            {session.user.email === 'admin@admin.com' ? (
+                                <li>
+                                    <Link href="/admin/dashboard">
+                                        Dashboard
+                                    </Link>
+                                </li>
+                            ) : (
+                                <li>
+                                    <Link href="/user/profile">
+                                        Profile
+                                    </Link>
+                                </li>
+                            )}
                             <li><button>Settings</button></li>
                             <li><button onClick={async (e) => {
                                 e.preventDefault();

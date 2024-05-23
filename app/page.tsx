@@ -1,9 +1,33 @@
+"use client"
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+
+interface News {
+  id: number;
+  title: string;
+  category: string;
+  image_url: string;
+}
 
 export default function Home() {
+  const [news, setNews] = useState<News[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const { data, error } = await supabase.from("news").select("*");
+      if (error) {
+        console.error("Error fetching news:", error);
+      } else {
+        setNews(data as News[]);
+      }
+    };
+    fetchNews();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -12,57 +36,27 @@ export default function Home() {
           <h1 className="text-2xl border-b-4 border-red-500 w-fit font-semibold">
             Berita utama
           </h1>
-          <Link href="/detail" className="group flex justify-start items-center h-48 w-full">
-            <div className="overflow-hidden mr-8">
-              <Image
-                src="/dummy1.png"
-                alt=""
-                width={300}
-                height={150}
-                className="group-hover:scale-110 transition duration-700"
-              />
-            </div>
-            <div className="">
-              <h1 className="text-xl font-medium mb-2 group-hover:text-red-500 transition duration-300">
-                Kemenhub Bebastugaskan Asri Damuna Usai Ajak Youtuber Korsel ke Hotel
-              </h1>
-              <p className="text-red-500">Hiburan</p>
-            </div>
-          </Link>
-          <Link href="/detail" className="group flex justify-start items-center h-48 w-full">
-            <div className="overflow-hidden mr-8">
-              <Image
-                src="/dummy1.png"
-                alt=""
-                width={300}
-                height={150}
-                className="group-hover:scale-110 transition duration-700"
-              />
-            </div>
-            <div className="">
-              <h1 className="text-xl font-medium mb-2 group-hover:text-red-500 transition duration-300">
-                Kemenhub Bebastugaskan Asri Damuna Usai Ajak Youtuber Korsel ke Hotel
-              </h1>
-              <p className="text-red-500">Hiburan</p>
-            </div>
-          </Link>
-          <Link href="/detail" className="group flex justify-start items-center h-48 w-full">
-            <div className="overflow-hidden mr-8">
-              <Image
-                src="/dummy1.png"
-                alt=""
-                width={300}
-                height={150}
-                className="group-hover:scale-110 transition duration-700"
-              />
-            </div>
-            <div className="">
-              <h1 className="text-xl font-medium mb-2 group-hover:text-red-500 transition duration-300">
-                Kemenhub Bebastugaskan Asri Damuna Usai Ajak Youtuber Korsel ke Hotel
-              </h1>
-              <p className="text-red-500">Hiburan</p>
-            </div>
-          </Link>
+          {news.map((item) => (
+            <Link
+              key={item.id}
+              href={`/detail?id=${item.id}`}
+              className="group flex justify-start items-center h-48 w-full my-5"
+            >
+              <div className="overflow-hidden mr-8">
+                <img
+                  src={item.image_url}
+                  alt=""
+                  className="group-hover:scale-110 transition duration-700 w-[300px] h-[170px]"
+                />
+              </div>
+              <div className="">
+                <h1 className="text-xl font-medium mb-2 group-hover:text-red-500 transition duration-300">
+                  {item.title}
+                </h1>
+                <p className="text-red-500">{item.category}</p>
+              </div>
+            </Link>
+          ))}
         </div>
         <div className="w-4/12 p-14 h-full text-black">
           <h1 className="text-2xl border-b-4 border-red-500 w-fit font-semibold">

@@ -64,7 +64,7 @@ export default function Page() {
                             if (error)
                                 setAlert({ msg: error.message, type: "error" });
                             else
-                                setAlert({ msg: "Check your email!", type: "info" });
+                                setAlert({ msg: "Congratulations, you have successfully registered!", type: "info" });
                         }}>
                         Register
                     </button>
