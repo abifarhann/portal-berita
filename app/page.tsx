@@ -49,7 +49,7 @@ export default function Home() {
                   className="group-hover:scale-110 transition duration-700 w-[300px] h-[170px]"
                 />
               </div>
-              <div className="">
+              <div className="w-[35rem]">
                 <h1 className="text-xl font-medium mb-2 group-hover:text-red-500 transition duration-300">
                   {item.title}
                 </h1>
