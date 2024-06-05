@@ -77,7 +77,7 @@ function Dashboard() {
   return (
     <>
       <Navbar />
-      <div className="w-full h-screen flex justify-center bg-white text-black mx-auto py-8">
+      <div className="w-full h-full flex justify-center bg-white text-black mx-auto py-8">
         <div className="container">
           <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
           <div className="mb-4">
